@@ -1,0 +1,21 @@
+micronaut:
+  application:
+    name: test
+
+datasources:
+  default:
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    username: test
+    password: test
+    dialect: org.hibernate.dialect.Oracle10gDialect
+
+jpa:
+  default:
+    packages-to-scan:
+      - 'org.personal.todos'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
