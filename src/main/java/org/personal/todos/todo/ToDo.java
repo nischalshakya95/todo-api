@@ -15,8 +15,8 @@ public class ToDo {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "is_completed", nullable = false)
-    private boolean isCompleted;
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "login_id")
