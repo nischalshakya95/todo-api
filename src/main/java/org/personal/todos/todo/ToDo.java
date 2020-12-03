@@ -1,5 +1,7 @@
 package org.personal.todos.todo;
 
+import org.personal.todos.user.Login;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class ToDo {
 
     @Column(name = "is_completed", nullable = false)
     private boolean isCompleted;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "login_id")
+    private Login login;
 
     public Long getId() {
         return id;
@@ -32,11 +38,19 @@ public class ToDo {
         this.title = title;
     }
 
-    public Boolean getCompleted() {
+    public boolean isCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
 }
