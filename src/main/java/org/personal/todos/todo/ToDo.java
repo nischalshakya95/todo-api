@@ -38,11 +38,11 @@ public class ToDo {
         this.title = title;
     }
 
-    public boolean isCompleted() {
+    public Boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
 
