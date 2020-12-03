@@ -10,22 +10,22 @@ import java.util.List;
 public class LoginResource {
 
     @Inject
-    private LoginRepository loginRepository;
+    private LoginService loginService;
 
     @Post("/signup")
     public HttpResponse<Login> save(@Body Login login) {
-        return HttpResponse.created(loginRepository.save(login));
+        return HttpResponse.created(loginService.save(login));
     }
 
     @Get
     public HttpResponse<List<Login>> findAll() {
-        return HttpResponse.ok(loginRepository.findAll());
+        return HttpResponse.ok(loginService.findAll());
     }
 
     @Post("/sign-in")
     public HttpResponse<Login> findLoginByUsernameAndPassword(@Body Login login) {
-        return loginRepository
-                .find(login.getUsername(), login.getPassword())
+        return loginService
+                .findLoginByUsernameAndPassword(login)
                 .map(HttpResponse::ok)
                 .orElseThrow(() -> new RuntimeException("Invalid Credentials"));
     }
@@ -35,19 +35,19 @@ public class LoginResource {
         if (login.getId() == null || !login.getId().equals(id)) {
             return HttpResponse.badRequest();
         }
-        return HttpResponse.ok(loginRepository.update(login));
+        return HttpResponse.ok(loginService.update(login));
     }
 
     @Delete("/{id}")
     public HttpResponse<Login> remove(@PathVariable Long id) {
-        Login login = loginRepository.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
-        loginRepository.delete(login);
+        Login login = loginService.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+        loginService.delete(login);
         return HttpResponse.noContent();
     }
 
     @Get("/{id}")
     public HttpResponse<Login> findOne(@PathVariable Long id) {
-        return loginRepository.findById(id).map(HttpResponse::ok)
+        return loginService.findById(id).map(HttpResponse::ok)
                 .orElseThrow(() -> new RuntimeException("Resource with give id not found"));
     }
 }

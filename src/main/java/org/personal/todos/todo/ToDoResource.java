@@ -10,16 +10,16 @@ import java.util.List;
 public class ToDoResource {
 
     @Inject
-    private ToDoRepository toDoRepository;
+    private ToDoService toDoService;
 
     @Get
     public HttpResponse<List<ToDo>> findAll() {
-        return HttpResponse.ok().body(toDoRepository.findAll());
+        return HttpResponse.ok().body(toDoService.findAll());
     }
 
     @Post
     public HttpResponse<ToDo> save(@Body ToDo toDo) {
-        return HttpResponse.created(toDoRepository.save(toDo));
+        return HttpResponse.created(toDoService.save(toDo));
     }
 
     @Put("/{id}")
@@ -27,19 +27,19 @@ public class ToDoResource {
         if (toDo.getId() == null || !toDo.getId().equals(id)) {
             return HttpResponse.badRequest();
         }
-        return HttpResponse.ok(toDoRepository.update(toDo));
+        return HttpResponse.ok(toDoService.update(toDo));
     }
 
     @Delete("/{id}")
     public HttpResponse<Void> remove(@PathVariable Long id) {
-        ToDo toDo = toDoRepository.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
-        toDoRepository.delete(toDo);
+        ToDo toDo = toDoService.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+        toDoService.delete(toDo);
         return HttpResponse.noContent();
     }
 
     @Get("/{id}")
     public HttpResponse<ToDo> findOne(@PathVariable Long id) {
-        return toDoRepository.findById(id).map(HttpResponse::ok)
+        return toDoService.findById(id).map(HttpResponse::ok)
                 .orElseThrow(() -> new RuntimeException("Resource with given id not found"));
     }
 }
