@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Controller("/api/todos")
-public class ToDoResource {
+public class ToDoController {
 
     @Inject
     private ToDoService toDoService;
@@ -32,14 +32,13 @@ public class ToDoResource {
 
     @Delete("/{id}")
     public HttpResponse<Void> remove(@PathVariable Long id) {
-        ToDo toDo = toDoService.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+        ToDo toDo = toDoService.findById(id);
         toDoService.delete(toDo);
         return HttpResponse.noContent();
     }
 
     @Get("/{id}")
     public HttpResponse<ToDo> findOne(@PathVariable Long id) {
-        return toDoService.findById(id).map(HttpResponse::ok)
-                .orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+        return HttpResponse.ok(toDoService.findById(id));
     }
 }

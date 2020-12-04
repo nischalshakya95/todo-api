@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Controller("/api/login")
-public class LoginResource {
+public class LoginController {
 
     @Inject
     private LoginService loginService;
@@ -24,10 +24,7 @@ public class LoginResource {
 
     @Post("/sign-in")
     public HttpResponse<Login> findLoginByUsernameAndPassword(@Body Login login) {
-        return loginService
-                .findLoginByUsernameAndPassword(login)
-                .map(HttpResponse::ok)
-                .orElseThrow(() -> new RuntimeException("Invalid Credentials"));
+        return HttpResponse.ok(loginService.findLoginByUsernameAndPassword(login));
     }
 
     @Put("/{id}")
@@ -40,14 +37,13 @@ public class LoginResource {
 
     @Delete("/{id}")
     public HttpResponse<Login> remove(@PathVariable Long id) {
-        Login login = loginService.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
+        Login login = loginService.findById(id);
         loginService.delete(login);
         return HttpResponse.noContent();
     }
 
     @Get("/{id}")
     public HttpResponse<Login> findOne(@PathVariable Long id) {
-        return loginService.findById(id).map(HttpResponse::ok)
-                .orElseThrow(() -> new RuntimeException("Resource with give id not found"));
+        return HttpResponse.ok(loginService.findById(id));
     }
 }

@@ -2,10 +2,11 @@ package org.personal.todos.todo;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
+@Transactional
 public class ToDoService {
 
     @Inject
@@ -27,8 +28,8 @@ public class ToDoService {
         toDoRepository.delete(toDo);
     }
 
-    public Optional<ToDo> findById(Long id) {
-        return toDoRepository.findById(id);
+    public ToDo findById(Long id) {
+        return toDoRepository.findById(id).orElseThrow(() -> new RuntimeException("Resource with given id not found"));
     }
 }
 

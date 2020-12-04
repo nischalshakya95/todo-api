@@ -2,17 +2,19 @@ package org.personal.todos.user;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
+@Transactional
 public class LoginService {
 
     @Inject
     private LoginRepository loginRepository;
 
-    public Optional<Login> findLoginByUsernameAndPassword(Login login) {
-        return loginRepository.find(login.getUsername(), login.getPassword());
+    public Login findLoginByUsernameAndPassword(Login login) {
+        return loginRepository.find(login.getUsername(), login.getPassword())
+                .orElseThrow(() -> new RuntimeException("Invalid Credentials"));
     }
 
     public List<Login> findAll() {
@@ -31,7 +33,8 @@ public class LoginService {
         loginRepository.delete(login);
     }
 
-    public Optional<Login> findById(Long id) {
-        return loginRepository.findById(id);
+    public Login findById(Long id) {
+        return loginRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resource with given id not found"));
     }
 }
