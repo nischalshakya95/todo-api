@@ -1,6 +1,6 @@
 package org.personal.todos.todo;
 
-import org.personal.todos.user.Login;
+import org.personal.todos.user.User;
 
 import javax.persistence.*;
 
@@ -19,8 +19,8 @@ public class ToDo {
     private Boolean isCompleted;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "login_id")
-    private Login login;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class ToDo {
         isCompleted = completed;
     }
 
-    public Login getLogin() {
-        return login;
+    public User getUser() {
+        return user;
     }
 
-    public void setLogin(Login login) {
-        this.login = login;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

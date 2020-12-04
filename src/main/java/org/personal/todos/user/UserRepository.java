@@ -6,7 +6,7 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 @Repository
-public interface LoginRepository extends JpaRepository<Login, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<Login> find(String username, String password);
+    Optional<User> find(String username, String password);
 }
