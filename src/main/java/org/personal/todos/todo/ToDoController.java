@@ -2,11 +2,14 @@ package org.personal.todos.todo;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.inject.Inject;
 import java.util.List;
 
 @Controller("/api/todos")
+@Secured(SecurityRule.IS_AUTHENTICATED)
 public class ToDoController {
 
     @Inject

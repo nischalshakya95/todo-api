@@ -1,6 +1,19 @@
 micronaut:
   application:
     name: test
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        generator:
+          access-token:
+            expiration: 3600
+          refresh-token:
+            secret: eefe82f8-7ca6-11ea-bc55-0242ac130003
+        signatures:
+          secret:
+            generator:
+              secret: eefe82f8-7ca6-11ea-bc55-0242ac130003
 
 datasources:
   default:
